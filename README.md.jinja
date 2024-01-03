@@ -12,20 +12,29 @@
 [![pypi version](https://img.shields.io/pypi/v/{{project_name}}.svg)](https://pypi.org/project/{{project_name}}/)
 ![Python Versions](https://img.shields.io/pypi/pyversions/{{project_name}})
 ![PyPI - Downloads](https://img.shields.io/pypi/dw/{{project_name}})
-{% if full_coverage %}
+{%- if full_coverage %}
 [![coverage](https://img.shields.io/badge/coverage-100%25-blue)](https://{{github_user}}.github.io/{{project_name}}/contributing/#coverage)
-{% endif %}
+{%- endif %}
 [![GitHub Sponsors](https://img.shields.io/github/sponsors/{{github_user}})](https://github.com/sponsors/{{github_user}})
 
 <!-- -8<- [end:Header] -->
 
 ## Installation
 
+{% if insider_only %}
+This project is currently only available for insiders, which mean that you can get access to it if you sponsor me.
+You should then have access to [this repository](https://github.com:{{github_user}}-insiders/{{project_name}}.git).
+
+``` bash
+pip install git+ssh://git@github.com:{{github_user}}-insiders/{{project_name}}.git@insiders
+```
+{%else%}
 You can install "{{project_name}}" via [pip](https://pypi.org/project/pip/):
 
 ``` bash
 pip install {{project_name}}
 ```
+{%endif%}
 
 ## Key Features
 
