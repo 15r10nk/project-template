@@ -1,0 +1,47 @@
+<!-- -8<- [start:Header] -->
+{%if show_project_logo%}
+<p align="center">
+  <a href="https://{{github_user}}.github.io/{{project_name}}/">
+    <img src="https://raw.githubusercontent.com/{{github_user}}/{{project_name}}/main/docs/assets/logo.svg" width="500" alt="{{project_name}}">
+  </a>
+</p>
+{%endif%}
+
+![ci](https://github.com/{{github_user}}/{{project_name}}/actions/workflows/ci.yml/badge.svg?branch=main)
+[![Docs](https://img.shields.io/badge/docs-mkdocs-green)](https://{{github_user}}.github.io/{{project_name}}/)
+[![pypi version](https://img.shields.io/pypi/v/{{project_name}}.svg)](https://pypi.org/project/{{project_name}}/)
+![Python Versions](https://img.shields.io/pypi/pyversions/{{project_name}})
+![PyPI - Downloads](https://img.shields.io/pypi/dw/{{project_name}})
+{% if full_coverage %}
+[![coverage](https://img.shields.io/badge/coverage-100%25-blue)](https://{{github_user}}.github.io/{{project_name}}/contributing/#coverage)
+{% endif %}
+[![GitHub Sponsors](https://img.shields.io/github/sponsors/{{github_user}})](https://github.com/sponsors/{{github_user}})
+
+<!-- -8<- [end:Header] -->
+
+## Installation
+
+You can install "{{project_name}}" via [pip](https://pypi.org/project/pip/):
+
+``` bash
+pip install {{project_name}}
+```
+
+## Key Features
+
+- **list** of features ...
+
+
+## Usage
+
+usage ...
+
+<!-- -8<- [start:Feedback] -->
+## Issues
+
+If you encounter any problems, please [report an issue](https://github.com/{{github_user}}/{{project_name}}/issues) along with a detailed description.
+<!-- -8<- [end:Feedback] -->
+
+## License
+
+Distributed under the terms of the [MIT](http://opensource.org/licenses/MIT) license, "{{project_name}}" is free and open source software.
