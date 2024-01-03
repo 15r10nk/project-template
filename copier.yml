@@ -1,4 +1,9 @@
 
+_exclude:
+  - "examples"
+  - ".git"
+  - "copier.yml"
+
 # questions
 project_name:
     type: str
@@ -7,13 +12,48 @@ project_name:
 module_name:
     type: str
     help: What is your Python module name?
+    default: "{{project_name.replace('-','_')}}"
+
+
+github_user:
+  type: str
+  help: github user name
+  default: 15r10nk
+
+project_description:
+    type: str
+    help: Describe your project
+
+project_main:
+  type: bool
+  help: is your project a executable command
+
+full_coverage:
+  type: bool
+  help: hard requirement for 100% test coverage
+  default: true
 
 insider_only:
   type: bool
   help: is this project for insider only
 
-
 use_mkdocs:
   type: bool
   help: use and deploy documentation with mkdocs
+  default: true
 
+python_versions:
+  type: yaml
+  help: supported python versions
+  default: "['3.8','3.9','3.10','3.11','3.12']"
+
+min_python_version:
+  type: str
+  when: false
+  help: the minimal supported python version 
+  default: "{{python_versions[0]}}"
+
+min_py_version:
+  type: str
+  when: false
+  default: "{{'py'+min_python_version.replace('.','')}}"

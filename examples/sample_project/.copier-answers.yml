@@ -1,0 +1,17 @@
+# Changes here will be overwritten by Copier
+_commit: f06c5b0
+_src_path: ../..
+github_user: 15r10nk
+insider_only: false
+min_python_version: '3.8'
+module_name: my_project
+project_description: my cool project
+project_main: false
+project_name: my-project
+python_versions:
+- '3.8'
+- '3.9'
+- '3.10'
+- '3.11'
+- '3.12'
+use_mkdocs: true
