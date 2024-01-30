@@ -3,6 +3,7 @@ _exclude:
   - "examples"
   - ".git"
   - "copier.yml"
+  - "update_all.sh"
 
 # questions
 project_name:
