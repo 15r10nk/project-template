@@ -17,15 +17,15 @@ classifiers = [
   "Programming Language :: Python :: Implementation :: CPython",
   "Programming Language :: Python :: Implementation :: PyPy"
 ]
-
-dependencies = []
+dependencies = [
+]
 description = 'my cool project'
-dynamic = ["version"]
 keywords = []
 license = "MIT"
 name = "my-project"
 readme = "README.md"
 requires-python = ">=3.8"
+version="0.0.1"
 
 
 
@@ -61,7 +61,6 @@ omit = [
   "src/my_project/__about__.py"
 ]
 parallel = true
-source_pkgs = ["my_project", "tests"]
 
 [tool.hatch.envs.default]
 scripts.test = "pytest {args:tests}"
@@ -73,9 +72,11 @@ dependencies = [
 [tool.hatch.envs.all]
 dependencies = [
   "coverage[toml]>=6.5",
+  "coverage-enable-subprocess",
   "pytest",
   "inline-snapshot"
 ]
+env-vars.TOP = "{root}"
 scripts.test-cov = "coverage run -m pytest {args:tests}"
 
 [[tool.hatch.envs.all.matrix]]
