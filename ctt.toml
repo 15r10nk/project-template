@@ -1,0 +1,15 @@
+[defaults]
+project_name="the-project"
+project_description="cool project"
+project_main=true
+insider_only=false
+use_mkdocs=false
+
+[output."ctt/test-pytest"]
+_extra_tasks=[
+    "hatch test",
+]
+
+
+[output."ctt/insider_only"]
+insider_only=true

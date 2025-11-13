@@ -1,24 +1,22 @@
+_subdirectory: template
 
-_exclude:
-  - "examples"
-  - ".git"
-  - "copier.yml"
-  - "update_all.sh"
+_skip_if_exists:
+- CHANGELOG.md
 
 # questions
 project_name:
-    type: str
-    help: What is your project name?
+  type: str
+  help: What is your project name?
 
 show_project_logo:
-    type: bool
-    help: Show project logo?
-    default: False
+  type: bool
+  help: Show project logo?
+  default: false
 
 module_name:
-    type: str
-    help: What is your Python module name?
-    default: "{{project_name.replace('-','_')}}"
+  type: str
+  help: What is your Python module name?
+  default: "{{project_name.replace('-','_')}}"
 
 
 github_user:
@@ -27,8 +25,8 @@ github_user:
   default: 15r10nk
 
 project_description:
-    type: str
-    help: Describe your project
+  type: str
+  help: Describe your project
 
 project_main:
   type: bool
@@ -51,13 +49,17 @@ use_mkdocs:
 python_versions:
   type: yaml
   help: supported python versions
-  default: "['3.8','3.9','3.10','3.11','3.12']"
+  default: "['3.8','3.9','3.10','3.11','3.12','3.13','3.14']"
+
+pypy_versions:
+  type: yaml
+  default: [pypy3.9, pypy3.10]
 
 min_python_version:
   type: str
   when: false
-  help: the minimal supported python version 
-  default: "{{python_versions[0]}}"
+  help: the minimal supported python version
+  default: '{{python_versions[0]}}'
 
 min_py_version:
   type: str
