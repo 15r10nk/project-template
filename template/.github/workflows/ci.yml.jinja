@@ -17,9 +17,7 @@ jobs:
         python-version: {{python_versions+pypy_versions}}
 {% raw %}
         os: [ubuntu-latest, windows-latest, macos-14]
-{% endraw %}
-        extra_deps: {{extra_deps | to_json}}
-{% raw %}
+        lowest_resolution: [false]
         is_insider:
         - ${{contains(github.repository, '-insiders/')}}
 
@@ -35,12 +33,18 @@ jobs:
         - os: windows-latest
           python-version: '{{v}}'
 {% endfor %}
+        include:
+        - os: ubuntu-latest
+          python-version: '{{python_versions[0]}}'
+          lowest_resolution: true
+        - os: ubuntu-latest
+          python-version: '{{python_versions[-1]}}'
+          lowest_resolution: true
 {% raw %}
 
     env:
       TOP: ${{github.workspace}}
       COVERAGE_PROCESS_START: ${{github.workspace}}/pyproject.toml
-      UV_WITH: ${{matrix.extra_deps}}
     steps:
     - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
     - uses: ./.github/actions/setup
@@ -48,7 +52,7 @@ jobs:
         python-version: ${{matrix.python-version}}
 
     - run: |
-        uv run --with coverage --with pytest --with pytest-xdist -m ${{ matrix.os == 'ubuntu-latest' && 'coverage run -m' || '' }} pytest -n=auto -vv
+        uv run ${{ matrix.lowest_resolution && '--resolution lowest-direct' || '' }} --with coverage --with pytest --with pytest-xdist -m ${{ matrix.os == 'ubuntu-latest' && 'coverage run -m' || '' }} pytest -n=auto -vv
     - run: |
         uv run --with coverage coverage combine
         mv .coverage .coverage.${{ matrix.python-version }}-${{matrix.os}}-${{strategy.job-index}}

@@ -93,8 +93,3 @@ discord_id:
 discord_invite_id:
   type: str
   default: ''
-
-extra_deps:
-  type: yaml
-  help: Additional dependency variants to test (for example, ["pydantic<2", "pydantic>=2"])
-  default: ['']
