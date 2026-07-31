@@ -4,8 +4,7 @@ ci:
   autofix_commit_msg: 'style: pre-commit fixed styling'
   autoupdate_schedule: monthly
 
-default:
-  exclude: ^ctt/
+exclude: ^ctt/
 
 repos:
 - hooks:
@@ -93,6 +92,6 @@ repos:
   - id: actionlint
 
 - repo: https://github.com/crate-ci/typos
-  rev: v1
+  rev: v1.47.0
   hooks:
   - id: typos

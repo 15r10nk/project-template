@@ -3,6 +3,14 @@ _subdirectory: template
 _skip_if_exists:
 - CHANGELOG.md
 
+_exclude:
+- '{% if not use_mkdocs %}docs{% else %}__copier_keep_docs__{% endif %}'
+- '{% if not use_mkdocs %}mkdocs.yml{% else %}__copier_keep_mkdocs__{% endif %}'
+- '{% if not use_mkdocs %}.github/workflows/docs.yml{% else %}__copier_keep_release_docs__{% endif %}'
+- '{% if not use_mkdocs %}.github/workflows/deploy_development_docs.yml{% else %}__copier_keep_development_docs__{% endif %}'
+- '{% if not use_mkdocs %}.github/workflows/test_docs.yml{% else %}__copier_keep_test_docs__{% endif %}'
+- '{% if not project_main %}src/{{module_name}}/__main__.py{% else %}__copier_keep_main__{% endif %}'
+
 # questions
 project_name:
   type: str
@@ -24,13 +32,24 @@ github_user:
   help: github user name
   default: 15r10nk
 
+author_name:
+  type: str
+  help: Author name
+  default: Frank Hoffmann
+
+author_email:
+  type: str
+  help: Author email address
+  default: 15r10nk@polarbit.de
+
 project_description:
   type: str
   help: Describe your project
 
 project_main:
   type: bool
-  help: is your project a executable command
+  help: Should the project expose an executable command?
+  default: false
 
 full_coverage:
   type: bool
@@ -39,7 +58,8 @@ full_coverage:
 
 insider_only:
   type: bool
-  help: is this project for insider only
+  help: Is this project available to insiders only?
+  default: false
 
 use_mkdocs:
   type: bool
@@ -65,3 +85,16 @@ min_py_version:
   type: str
   when: false
   default: "{{'py'+min_python_version.replace('.','')}}"
+
+discord_id:
+  type: str
+  default: ''
+
+discord_invite_id:
+  type: str
+  default: ''
+
+extra_deps:
+  type: yaml
+  help: Additional dependency variants to test (for example, ["pydantic<2", "pydantic>=2"])
+  default: ['']

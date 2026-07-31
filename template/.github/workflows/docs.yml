@@ -27,4 +27,4 @@ jobs:
         git config user.name "Frank Hoffmann"
         git config user.email "15r10nk@users.noreply.github.com"
         git fetch origin gh-pages --depth=1
-        hatch run docs:mike deploy -u --push ${PROJECT_VERSION} latest
+        hatch run docs:deploy deploy -u --push ${PROJECT_VERSION} latest

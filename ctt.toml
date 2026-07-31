@@ -6,8 +6,9 @@ insider_only=false
 use_mkdocs=false
 
 [output."ctt/test-pytest"]
-_extra_tasks=[
-    "hatch test",
+_post_tasks=[
+    "uvx hatch run test",
+    "uvx hatch build",
 ]
 
 
