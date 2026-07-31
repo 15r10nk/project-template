@@ -144,6 +144,6 @@ jobs:
 
     - name: create github release
       env:
-        GITHUB_TOKEN: ${{ github.token }}
-      run: uvx --with scriv scriv github-release
+        GH_TOKEN: ${{ github.token }}
+      run: gh release create "$GITHUB_REF_NAME" --verify-tag --generate-notes
 {%- endraw %}

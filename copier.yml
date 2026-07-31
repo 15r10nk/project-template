@@ -5,7 +5,6 @@ _skip_if_exists:
 
 _tasks:
 - command: [uv, lock]
-  when: "{{_copier_operation == 'copy'}}"
 
 _exclude:
 - '{% if not use_mkdocs %}docs{% else %}__copier_keep_docs__{% endif %}'
