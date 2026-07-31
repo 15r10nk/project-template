@@ -87,6 +87,19 @@ scripts.run = "coverage run -m pytest {args}"
 [[tool.hatch.envs.hatch-test.matrix]]
 python = [{{ python_versions|map('to_json')|join(", ") }}]
 
+{% if use_mkdocs %}
+[tool.hatch.envs.docs]
+dependencies = [
+  "mike>=2",
+  "mkdocs>=1.4.2",
+  "mkdocs-material[imaging]>=8.5.10",
+  "mkdocstrings>=0.19.0"
+]
+scripts.build = "mkdocs build {args}"
+scripts.deploy = "mike {args}"
+scripts.serve = "mkdocs serve {args}"
+{% endif %}
+
 [tool.hatch.envs.cov]
 dependencies = ["coverage[toml]>=6.5"]
 detached = true
@@ -98,16 +111,3 @@ scripts.test = [
   "coverage html",
   "coverage report {% if full_coverage %} --fail-under 100 {%endif%}"
 ]
-
-{%- if use_mkdocs %}
-[tool.hatch.envs.docs]
-dependencies = [
-  "mike>=2",
-  "mkdocs>=1.4.2",
-  "mkdocs-material[imaging]>=8.5.10",
-  "mkdocstrings>=0.19.0"
-]
-scripts.build = "mkdocs build {args}"
-scripts.deploy = "mike {args}"
-scripts.serve = "mkdocs serve {args}"
-{% endif -%}

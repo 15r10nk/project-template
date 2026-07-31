@@ -29,6 +29,12 @@ readme = "README.md"
 requires-python = ">=3.8"
 version="0.0.1"
 
+[dependency-groups]
+cog = [
+  "cogapp",
+]
+
+
 
 [project.scripts]
 the-project = "the_project.__main__:main"
@@ -84,6 +90,8 @@ scripts.run = "coverage run -m pytest {args}"
 
 [[tool.hatch.envs.hatch-test.matrix]]
 python = ["3.8", "3.9", "3.10", "3.11", "3.12", "3.13", "3.14"]
+
+
 
 [tool.hatch.envs.cov]
 dependencies = ["coverage[toml]>=6.5"]
