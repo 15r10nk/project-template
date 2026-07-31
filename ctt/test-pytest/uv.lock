@@ -1,0 +1,47 @@
+version = 1
+revision = 3
+requires-python = ">=3.8"
+resolution-markers = [
+    "python_full_version >= '3.9'",
+    "python_full_version < '3.9'",
+]
+
+[[package]]
+name = "cogapp"
+version = "3.4.1"
+source = { registry = "https://pypi.org/simple" }
+resolution-markers = [
+    "python_full_version < '3.9'",
+]
+sdist = { url = "https://files.pythonhosted.org/packages/b1/d7/9e40d9d957ab1042046b3f6959528f47f9c6e8cb0f2031a3ba69809ed6e9/cogapp-3.4.1.tar.gz", hash = "sha256:a806d5db9e318a1a2d3fce988008179168e7db13e5e55b19b79763f9bb9d2982", size = 53776, upload-time = "2024-03-07T19:06:26.198Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/92/4e/bd3bd0641fb05ba3ab6e16ffb9132ef71ffdeb0392ce21ec6670ff66eaf6/cogapp-3.4.1-py3-none-any.whl", hash = "sha256:1daba7b6c8bb23b733c64833de7aa3a42476c05afba19cff937e1b522216859d", size = 27328, upload-time = "2024-03-07T19:06:19.672Z" },
+]
+
+[[package]]
+name = "cogapp"
+version = "3.6.0"
+source = { registry = "https://pypi.org/simple" }
+resolution-markers = [
+    "python_full_version >= '3.9'",
+]
+sdist = { url = "https://files.pythonhosted.org/packages/64/ea/4ffa8095e0b675e9961cbdcad002c09d35d4ab76ff99d61a014e9e6bcd53/cogapp-3.6.0.tar.gz", hash = "sha256:ec2a9170bfa644bf0d91996fdb5576c13d7e5e848bb2378a6f92727b48f92604", size = 59742, upload-time = "2025-09-21T15:54:13.553Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/05/1c/23b5110b7cb305f0fe3a5d6809d6804c1cb57d57b59516dbb5e24aaf95fc/cogapp-3.6.0-py3-none-any.whl", hash = "sha256:6ea11c63221f92978d37d8d76208eadeae2a6e4641d323f165738a5464a19d32", size = 30550, upload-time = "2025-09-21T15:54:12.205Z" },
+]
+
+[[package]]
+name = "the-project"
+version = "0.0.1"
+source = { editable = "." }
+
+[package.dev-dependencies]
+cog = [
+    { name = "cogapp", version = "3.4.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.9'" },
+    { name = "cogapp", version = "3.6.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.9'" },
+]
+
+[package.metadata]
+
+[package.metadata.requires-dev]
+cog = [{ name = "cogapp", specifier = ">=3.4.1" }]

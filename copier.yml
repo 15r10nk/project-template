@@ -3,6 +3,10 @@ _subdirectory: template
 _skip_if_exists:
 - CHANGELOG.md
 
+_tasks:
+- command: [uv, lock]
+  when: "{{_copier_operation == 'copy'}}"
+
 _exclude:
 - '{% if not use_mkdocs %}docs{% else %}__copier_keep_docs__{% endif %}'
 - '{% if not use_mkdocs %}mkdocs.yml{% else %}__copier_keep_mkdocs__{% endif %}'

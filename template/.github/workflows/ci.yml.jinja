@@ -51,10 +51,23 @@ jobs:
       with:
         python-version: ${{matrix.python-version}}
 
+    - name: Resolve lowest direct dependencies
+      if: matrix.lowest_resolution
+      run: |
+        uv lock --upgrade --resolution lowest-direct
+        uv sync --locked --resolution lowest-direct
+        uv pip install coverage pytest pytest-xdist
+
+    - name: Test locked dependencies
+      if: ${{ !matrix.lowest_resolution }}
+      run: uv run --locked --with coverage --with pytest --with pytest-xdist -m ${{ matrix.os == 'ubuntu-latest' && 'coverage run -m' || '' }} pytest -n=auto -vv
+
+    - name: Test lowest direct dependencies
+      if: matrix.lowest_resolution
+      run: uv run --no-sync -m coverage run -m pytest -n=auto -vv
+
     - run: |
-        uv run ${{ matrix.lowest_resolution && '--resolution lowest-direct' || '' }} --with coverage --with pytest --with pytest-xdist -m ${{ matrix.os == 'ubuntu-latest' && 'coverage run -m' || '' }} pytest -n=auto -vv
-    - run: |
-        uv run --with coverage coverage combine
+        uv run ${{ matrix.lowest_resolution && '--no-sync' || '--with coverage' }} -m coverage combine
         mv .coverage .coverage.${{ matrix.python-version }}-${{matrix.os}}-${{strategy.job-index}}
       if: matrix.os == 'ubuntu-latest'
 
