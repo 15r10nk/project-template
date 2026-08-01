@@ -7,10 +7,32 @@ import sys
 import tempfile
 from pathlib import Path
 
+import yaml
 from copier import run_recopy
 
 ANSWERS_FILE = ".copier-answers.yml"
 MANIFEST_FILE = ".copier-enforce.json"
+
+
+def template_checkout() -> Path:
+    """Find the template checkout from which pre-commit installed this hook."""
+    candidates = [Path(__file__).resolve(), Path(sys.executable).resolve()]
+    for candidate in candidates:
+        for parent in candidate.parents:
+            if (parent / "copier.yml").is_file() and (
+                parent / ".pre-commit-hooks.yaml"
+            ).is_file():
+                return parent
+    raise RuntimeError("cannot find the template checkout")
+
+
+def use_local_template(answers: Path) -> None:
+    """Point the temporary answers file at pre-commit's local checkout."""
+    data = yaml.safe_load(answers.read_text(encoding="utf-8"))
+    if not isinstance(data, dict):
+        raise ValueError(f"{ANSWERS_FILE} must contain a YAML mapping")
+    data["_src_path"] = str(template_checkout())
+    answers.write_text(yaml.safe_dump(data, sort_keys=False), encoding="utf-8")
 
 
 def snapshot(path: Path) -> dict[str, tuple[str, bytes]]:
@@ -63,6 +85,7 @@ def main() -> int:
         expected = Path(temporary)
         shutil.copy2(answers, expected / ANSWERS_FILE)
         try:
+            use_local_template(expected / ANSWERS_FILE)
             run_recopy(
                 expected,
                 defaults=True,
