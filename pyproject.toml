@@ -1,0 +1,11 @@
+[build-system]
+build-backend = "setuptools.build_meta"
+requires = ["setuptools>=61"]
+
+[project]
+name = "project-template-hooks"
+version = "0"
+
+[tool.setuptools]
+packages = []
+script-files = ["scripts/copier-enforce.py"]

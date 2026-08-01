@@ -1,6 +1,8 @@
 - id: copier-enforce
   name: enforce Copier-managed files
-  entry: scripts/copier-enforce.py
-  language: script
+  entry: copier-enforce.py
+  language: python
+  additional_dependencies:
+  - copier>=9.10,<10
   always_run: true
   pass_filenames: false

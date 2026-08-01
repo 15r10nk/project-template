@@ -3,10 +3,11 @@ from __future__ import annotations
 
 import json
 import shutil
-import subprocess
 import sys
 import tempfile
 from pathlib import Path
+
+from copier import run_recopy
 
 ANSWERS_FILE = ".copier-answers.yml"
 MANIFEST_FILE = ".copier-enforce.json"
@@ -61,21 +62,16 @@ def main() -> int:
     with tempfile.TemporaryDirectory(prefix="copier-enforce-") as temporary:
         expected = Path(temporary)
         shutil.copy2(answers, expected / ANSWERS_FILE)
-        command = [
-            "uvx",
-            "--from",
-            "copier>=9.10,<10",
-            "copier",
-            "recopy",
-            "--trust",
-            "--skip-tasks",
-            "--defaults",
-            "--quiet",
-            str(expected),
-        ]
         try:
-            subprocess.run(command, check=True)
-        except (OSError, subprocess.CalledProcessError) as error:
+            run_recopy(
+                expected,
+                defaults=True,
+                overwrite=True,
+                quiet=True,
+                unsafe=True,
+                skip_tasks=True,
+            )
+        except Exception as error:
             print(f"error: cannot render Copier template: {error}", file=sys.stderr)
             return 2
 
