@@ -4,13 +4,26 @@ project_description="cool project"
 project_main=true
 insider_only=false
 use_mkdocs=false
+local_hook_path="../.."
 
 [output."ctt/test-pytest"]
 _post_tasks=[
+    "git init",
+    "git add --all",
     "uvx hatch run test",
     "uvx hatch build",
+    "uvx pre-commit run --all-files",
+    "rm -rf .git",
 ]
 
 
 [output."ctt/insider_only"]
 insider_only=true
+_post_tasks=[
+    "git init",
+    "git add --all",
+    "uvx hatch run test",
+    "uvx hatch build",
+    "uvx pre-commit run --all-files",
+    "rm -rf .git",
+]

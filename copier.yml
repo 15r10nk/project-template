@@ -15,6 +15,11 @@ _exclude:
 - '{% if not project_main %}src/{{module_name}}/__main__.py{% else %}__copier_keep_main__{% endif %}'
 
 # questions
+local_hook_path:
+  type: str
+  when: false
+  default: ''
+
 project_name:
   type: str
   help: What is your project name?

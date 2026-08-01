@@ -1,0 +1,6 @@
+- id: copier-enforce
+  name: enforce Copier-managed files
+  entry: scripts/copier-enforce.py
+  language: script
+  always_run: true
+  pass_filenames: false
