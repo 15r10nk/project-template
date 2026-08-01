@@ -81,7 +81,7 @@ python_versions:
 
 pypy_versions:
   type: yaml
-  default: [pypy3.9, pypy3.10]
+  default: [pypy3.11]
 
 min_python_version:
   type: str

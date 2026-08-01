@@ -16,7 +16,7 @@ jobs:
       matrix:
         python-version: ['{{python_versions|join("', '")}}', {{pypy_versions|join(', ')}}]
 {% raw %}
-        os: [ubuntu-latest, windows-latest, macos-14]
+        os: [ubuntu-latest, windows-latest, macos-15]
         lowest_resolution: [false]
         is_insider:
         - ${{contains(github.repository, '-insiders/')}}
@@ -25,10 +25,10 @@ jobs:
         - is_insider: true
           os: windows-latest
         - is_insider: true
-          os: macos-14
+          os: macos-15
 
 {% endraw %}{% for v in python_versions[1:-1]+pypy_versions %}
-        - os: macos-14
+        - os: macos-15
           python-version: {% if v.startswith('pypy') %}{{v}}{% else %}'{{v}}'{% endif %}
         - os: windows-latest
           python-version: {% if v.startswith('pypy') %}{{v}}{% else %}'{{v}}'{% endif %}
@@ -56,11 +56,11 @@ jobs:
       run: |
         uv lock --upgrade --resolution lowest-direct
         uv sync --locked --resolution lowest-direct
-        uv pip install coverage pytest pytest-xdist
+        uv pip install coverage coverage-enable-subprocess pytest pytest-xdist
 
     - name: Test locked dependencies
       if: ${{ !matrix.lowest_resolution }}
-      run: uv run --locked --with coverage --with pytest --with pytest-xdist -m ${{ matrix.os == 'ubuntu-latest' && 'coverage run -m' || '' }} pytest -n=auto -vv
+      run: uv run --locked --with coverage --with coverage-enable-subprocess --with pytest --with pytest-xdist -m ${{ matrix.os == 'ubuntu-latest' && 'coverage run -m' || '' }} pytest -n=auto -vv
 
     - name: Test lowest direct dependencies
       if: matrix.lowest_resolution
