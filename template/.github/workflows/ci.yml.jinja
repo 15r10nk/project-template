@@ -134,7 +134,7 @@ jobs:
         uv run --with coverage coverage html --skip-covered --skip-empty
 
         # Report and write to summary.
-        uv run --with coverage coverage report --format=markdown >> $GITHUB_STEP_SUMMARY
+        uv run --with coverage coverage report --format=markdown >> "$GITHUB_STEP_SUMMARY"
 
         # Report again and fail if under 100%.
 {% endraw %}        uv run --with coverage coverage report{% if full_coverage %} --fail-under=100{% endif %}
