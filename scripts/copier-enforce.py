@@ -26,12 +26,20 @@ def template_checkout() -> Path:
     raise RuntimeError("cannot find the template checkout")
 
 
-def use_local_template(answers: Path) -> None:
-    """Point the temporary answers file at pre-commit's local checkout."""
+def copy_local_template(destination: Path) -> None:
+    """Copy the installed template without its Git metadata."""
+    checkout = template_checkout()
+    destination.mkdir()
+    shutil.copy2(checkout / "copier.yml", destination / "copier.yml")
+    shutil.copytree(checkout / "template", destination / "template")
+
+
+def use_local_template(answers: Path, template: Path) -> None:
+    """Point the temporary answers file at a Git-free template copy."""
     data = yaml.safe_load(answers.read_text(encoding="utf-8"))
     if not isinstance(data, dict):
         raise ValueError(f"{ANSWERS_FILE} must contain a YAML mapping")
-    data["_src_path"] = str(template_checkout())
+    data["_src_path"] = str(template)
     answers.write_text(yaml.safe_dump(data, sort_keys=False), encoding="utf-8")
 
 
@@ -82,10 +90,14 @@ def main() -> int:
         return 2
 
     with tempfile.TemporaryDirectory(prefix="copier-enforce-") as temporary:
-        expected = Path(temporary)
-        shutil.copy2(answers, expected / ANSWERS_FILE)
+        temporary_path = Path(temporary)
+        expected = temporary_path / "expected"
+        expected.mkdir()
+        template = temporary_path / "template"
         try:
-            use_local_template(expected / ANSWERS_FILE)
+            copy_local_template(template)
+            shutil.copy2(answers, expected / ANSWERS_FILE)
+            use_local_template(expected / ANSWERS_FILE, template)
             run_recopy(
                 expected,
                 defaults=True,
