@@ -59,6 +59,11 @@ project_main:
   help: Should the project expose an executable command?
   default: false
 
+test_lowest_deps:
+  type: bool
+  help: Test the lowest supported direct dependency versions in CI?
+  default: true
+
 full_coverage:
   type: bool
   help: hard requirement for 100% test coverage

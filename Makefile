@@ -2,6 +2,7 @@
 .PHONY: test publish
 
 test:
+	uv run --no-project --with "copier>=9.10,<10" python -m unittest discover -s tests
 	uvx --from copier-template-tester ctt
 
 publish:

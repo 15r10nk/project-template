@@ -64,14 +64,14 @@ jobs:
         - os: windows-latest
           python-version: {% if v.startswith('pypy') %}{{v}}{% else %}'{{v}}'{% endif %}
 {% endfor %}
-        include:
+{% if test_lowest_deps %}        include:
         - os: ubuntu-latest
           python-version: '{{python_versions[0]}}'
           lowest_resolution: true
         - os: ubuntu-latest
           python-version: '{{python_versions[-1]}}'
           lowest_resolution: true
-{% raw %}
+{% endif %}{% raw %}
 
     env:
       TOP: ${{github.workspace}}

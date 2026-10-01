@@ -2,7 +2,9 @@
 from __future__ import annotations
 
 import json
+import os
 import shutil
+import subprocess
 import sys
 import tempfile
 from pathlib import Path
@@ -131,5 +133,20 @@ def main() -> int:
     return 0
 
 
+def run() -> int:
+    # Git exports repository-specific variables when invoking hooks. Copier runs
+    # Git in temporary directories, so those variables must not point it back
+    # at the repository being checked. Re-exec also clears Plumbum's cached env.
+    local_variables = subprocess.check_output(
+        ["git", "rev-parse", "--local-env-vars"], text=True
+    ).splitlines()
+    environment = os.environ.copy()
+    for name in local_variables:
+        environment.pop(name, None)
+    if environment != os.environ:
+        return subprocess.call([sys.executable, __file__], env=environment)
+    return main()
+
+
 if __name__ == "__main__":
-    raise SystemExit(main())
+    raise SystemExit(run())
