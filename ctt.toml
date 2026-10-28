@@ -4,7 +4,6 @@ project_description="cool project"
 project_main=true
 insider_only=false
 use_mkdocs=false
-local_hook_path="../.."
 
 [output."ctt/test-pytest"]
 _post_tasks=[

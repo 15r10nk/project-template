@@ -12,14 +12,10 @@ _exclude:
 - '{% if not use_mkdocs %}.github/workflows/docs.yml{% else %}__copier_keep_release_docs__{% endif %}'
 - '{% if not use_mkdocs %}.github/workflows/deploy_development_docs.yml{% else %}__copier_keep_development_docs__{% endif %}'
 - '{% if not use_mkdocs %}.github/workflows/test_docs.yml{% else %}__copier_keep_test_docs__{% endif %}'
+- '{% if insider_only %}.github/workflows/test-release.yml{% else %}__copier_keep_test_release__{% endif %}'
 - '{% if not project_main %}src/{{module_name}}/__main__.py{% else %}__copier_keep_main__{% endif %}'
 
 # questions
-local_hook_path:
-  type: str
-  when: false
-  default: ''
-
 project_name:
   type: str
   help: What is your project name?
