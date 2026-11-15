@@ -26,15 +26,51 @@ jobs:
     - name: Set up uv
       uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
 
+    - name: Configure Git author
+      run: |
+        git config user.name 'github-actions[bot]'
+        git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+
+    - name: Update Copier template
+      run: |
+        uvx --from 'copier>=9.10,<10' copier update --defaults --trust
+        git add --all
+        git diff --cached --check
+        if ! git diff --cached --quiet; then
+          git commit -m 'chore: update Copier template'
+        fi
+
     - name: Run cog update
       run: |
         git ls-files -z -- '*.py' '*.md' | xargs -0 -r uv run --group cog cog -r
-        uvx gha-update
-        # Update hook revisions on the first weekly run of each month, or manually.
-        if test "$GITHUB_EVENT_NAME" = workflow_dispatch || test "$(date -u +%d)" -le 7; then
-          uvx prek update
+        git add --all
+        if ! git diff --cached --quiet; then
+          git commit -m 'chore: regenerate cog content'
         fi
+
+    - name: Update GitHub Actions
+      run: |
+        uvx gha-update
+        git add --all
+        if ! git diff --cached --quiet; then
+          git commit -m 'chore: update GitHub Actions'
+        fi
+
+    - name: Update hook revisions
+      run: |
+        uvx prek update
+        git add --all
+        if ! git diff --cached --quiet; then
+          git commit -m 'chore: update hook revisions'
+        fi
+
+    - name: Run formatting hooks
+      run: |
         uvx prek run --all-files || uvx prek run --all-files
+        git add --all
+        if ! git diff --cached --quiet; then
+          git commit -m 'style: apply formatting hooks'
+        fi
 
     - name: Create GitHub App token
       id: app-token
@@ -50,8 +86,7 @@ jobs:
       uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
       with:
 {% raw %}        token: ${{steps.app-token.outputs.token}}
-{% endraw %}        commit-message: 'chore: weekly cog update'
-        title: 'chore: weekly update'
+{% endraw %}        title: 'chore: weekly update'
         body: Automated weekly update via scheduled workflow.
         branch: chore/weekly-update
         delete-branch: true
