@@ -1,14 +1,22 @@
 import importlib
-
+{% if project_main -%}
+import subprocess
+import sys
+{% endif %}
 
 def test_package_can_be_imported():
     assert importlib.import_module("{{module_name}}") is not None
-
 {% if project_main %}
+
 def test_cli(capsys):
     from {{module_name}}.__main__ import main
 
     main()
 
     assert capsys.readouterr().out == "{{project_name}}\n"
+
+
+def test_module_cli():
+    output = subprocess.check_output([sys.executable, "-m", "{{module_name}}"], text=True)
+    assert output == "{{project_name}}\n"
 {% endif -%}

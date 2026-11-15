@@ -1,9 +1,3 @@
-ci:
-  autofix_pr: false
-  autoupdate_commit_msg: 'style: pre-commit autoupdate'
-  autofix_commit_msg: 'style: pre-commit fixed styling'
-  autoupdate_schedule: monthly
-
 exclude: ^ctt/
 
 repos:

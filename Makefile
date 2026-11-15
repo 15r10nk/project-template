@@ -1,8 +1,15 @@
 
-.PHONY: test publish
+.PHONY: test test-act test-ctt publish
 
 test:
-	uv run --no-project --with "copier>=9.10,<10" python -m unittest discover -s tests
+	uv run pytest -v
+
+# Requires Docker and gh extension install nektos/gh-act.
+test-act:
+	uv run pytest tests/test_workflows.py --run-act -v
+
+# Additional generated-project hook checks; rewrites the tracked ctt/ examples.
+test-ctt:
 	uvx --from copier-template-tester ctt
 
 publish:

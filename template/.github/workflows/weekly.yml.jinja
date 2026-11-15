@@ -30,7 +30,11 @@ jobs:
       run: |
         git ls-files -z -- '*.py' '*.md' | xargs -0 -r uv run --group cog cog -r
         uvx gha-update
-        uvx pre-commit run --all-files || uvx pre-commit run --all-files
+        # Update hook revisions on the first weekly run of each month, or manually.
+        if test "$GITHUB_EVENT_NAME" = workflow_dispatch || test "$(date -u +%d)" -le 7; then
+          uvx prek update
+        fi
+        uvx prek run --all-files || uvx prek run --all-files
 
     - name: Create GitHub App token
       id: app-token

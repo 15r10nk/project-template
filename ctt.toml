@@ -11,7 +11,7 @@ _post_tasks=[
     "git add --all",
     "uvx hatch run test",
     "uvx hatch build",
-    "uvx pre-commit run --all-files",
+    "uvx prek run --all-files",
     "rm -rf .git",
 ]
 
@@ -23,6 +23,6 @@ _post_tasks=[
     "git add --all",
     "uvx hatch run test",
     "uvx hatch build",
-    "uvx pre-commit run --all-files",
+    "uvx prek run --all-files",
     "rm -rf .git",
 ]

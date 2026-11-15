@@ -1,4 +1,6 @@
 import importlib
+import subprocess
+import sys
 
 
 def test_package_can_be_imported():
@@ -11,3 +13,8 @@ def test_cli(capsys):
     main()
 
     assert capsys.readouterr().out == "the-project\n"
+
+
+def test_module_cli():
+    output = subprocess.check_output([sys.executable, "-m", "the_project"], text=True)
+    assert output == "the-project\n"
