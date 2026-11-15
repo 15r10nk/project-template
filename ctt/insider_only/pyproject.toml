@@ -2,6 +2,9 @@
 build-backend = "hatchling.build"
 requires = ["hatchling"]
 
+[tool.hatch.build.targets.wheel]
+packages = ["src/the_project"]
+
 [project]
 authors = [
   {name = "Frank Hoffmann", email = "15r10nk@polarbit.de"}
