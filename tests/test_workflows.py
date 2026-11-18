@@ -73,6 +73,18 @@ def act_project(render_project, run_command, tmp_path):
             id="cli-locked",
         ),
         pytest.param(
+            {
+                "project_main": False,
+                "test_lowest_deps": False,
+                "python_versions": ["3.9", "3.14"],
+            },
+            "ci.yml",
+            "push",
+            "test",
+            ["os:ubuntu-latest", "python-version:3.9", "lowest_resolution:false"],
+            id="library-python39",
+        ),
+        pytest.param(
             {"project_main": False, "test_lowest_deps": True},
             "ci.yml",
             "push",
